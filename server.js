@@ -58,11 +58,9 @@ app.post('/api/savetheearth/', upload.single('avatar'),function (req,res){
     const receipt_date = req.body.receipt_date;
     const receipt_no = req.body.receipt_no;  
     const images_url =  imgurl+req.body.user_id+moment().tz('Asia/Bangkok').format("YYYY-MM-DD-HH-mm-ss")+'.jpg';
-    const department_id =  req.body.department_id;    
-    const section_id =  req.body.section_id;    
-    const user_id =  req.body.user_id;
+    const employee_id =  req.body.employee_id;
 
-    const sql = "INSERT INTO save_the_earth (receipt_date,receipt_no,images_url,department_id,section_id,user_id) VALUES (?,?,?,?,?,?)";
+    const sql = "INSERT INTO save_the_earth (receipt_date,receipt_no,images_url,employee_id) VALUES (?,?,?,?)";
     getConn('hr').query(sql, [receipt_date,receipt_no,images_url,department_id,section_id,user_id], function (err, rows, fields) {
         if(!err){
 
