@@ -2,7 +2,7 @@
   "name": "freewillmdcapi",
   "version": "1.0.0",
   "main": "server.js",
-  "repository": "https://github.com/patipatfwg/freewillmdcapi.git",
+  "repository": "https://github.com/patipatfwg/fwghrapi.git",
   "author": "Freewill Solution",
   "license": "MIT",
   "scripts": {
