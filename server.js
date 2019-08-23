@@ -50,7 +50,7 @@ app.get('/api/savetheearth/',(req,res)=> {
 })
 
 app.get('/api/savetheearth/ranking',(req,res)=> {
-    let sql = "SELECT * FROM save_the_earth INNER JOIN employee ON save_the_earth.employee_id = employee.employee_id order by COUNT(employee.employee_id) DESC; ";
+    let sql = "SELECT * FROM employee INNER JOIN save_the_earth ON save_the_earth.employee_id = employee.employee_id order by COUNT(employee.employee_id) DESC";
     getConn('hr').query(sql,(err,rows,results) => { 
         if(!err){
             res.json({ "HEAD": rows.length , "BODY" : rows, "MESSAGE": "Ranking"})   
