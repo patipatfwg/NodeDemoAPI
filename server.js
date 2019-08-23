@@ -38,10 +38,22 @@ function getConn(aa){
 
 //////////////////////// Save The Earth //////////////////////////////////
 app.get('/api/savetheearth/',(req,res)=> { 
-    let sql = "SELECT DATE_FORMAT(receipt_date,'%d %b %Y') as receipt_date,COUNT(receipt_date) as total FROM save_the_earth WHERE user_id = "+req.body.user_id+" GROUP BY receipt_date DESC";
+    let sql = "SELECT DATE_FORMAT(receipt_date,'%d %b %Y') as receipt_date,COUNT(receipt_date) as total FROM save_the_earth WHERE employee_id = "+req.body.employee_id+" GROUP BY receipt_date DESC";
     getConn('hr').query(sql,(err,rows,results) => { 
         if(!err){
             res.json({ "HEAD": rows.length , "BODY" : rows, "MESSAGE": "Summary"})   
+        }else{
+            res.json(err)
+            console.log(err);
+        }
+    })
+})
+
+app.get('/api/savetheearth/ranking',(req,res)=> {
+    let sql = "SELECT * FROM save_the_earth INNER JOIN employee ON save_the_earth.employee_id = employee.employee_id order by COUNT(employee.employee_id) DESC; ";
+    getConn('hr').query(sql,(err,rows,results) => { 
+        if(!err){
+            res.json({ "HEAD": rows.length , "BODY" : rows, "MESSAGE": "Ranking"})   
         }else{
             res.json(err)
             console.log(err);
@@ -61,10 +73,10 @@ app.post('/api/savetheearth/', upload.single('avatar'),function (req,res){
     const employee_id =  req.body.employee_id;
 
     const sql = "INSERT INTO save_the_earth (receipt_date,receipt_no,images_url,employee_id) VALUES (?,?,?,?)";
-    getConn('hr').query(sql, [receipt_date,receipt_no,images_url,department_id,section_id,user_id], function (err, rows, fields) {
+    getConn('hr').query(sql, [receipt_date,receipt_no,images_url,employee_id], function (err, rows, fields) {
         if(!err){
 
-            res.json({ "HEAD": "" ,"BODY": "" ,"MESSAGE": "Add Success" })  
+            res.json({ "HEAD": fields ,"BODY": rows ,"MESSAGE": "Add Success" })  
 
             // getConn('hr').query('SELECT * FROM save_the_earth',(err,rows,results) => { 
             //     if(!err){
