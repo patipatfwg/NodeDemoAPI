@@ -1,9 +1,9 @@
 const express = require('express') 
-const mysql = require('mariadb')
-const Sequelize = require('sequelize');
-const env = require('./env');
+const mariadb = require('mariadb/callback');
+// const Sequelize = require('sequelize');
+// const env = require('./env');
 // const sequelize = new Sequelize('mariadb://user:password@example.com:9821/database')
-const sequelize = new Sequelize(env.dialect+'://'+env.user+':'+env.password+'@'+env.host+'/'+env.database)
+// const sequelize = new Sequelize(env.dialect+'://'+env.user+':'+env.password+'@'+env.host+'/'+env.database)
 const moment = require('moment');
 var momentz = require('moment-timezone');
 const bodyParser = require('body-parser')
@@ -29,7 +29,7 @@ app.use(bodyParser.json())
 ////////////////////////// DB Function ////////////////////////////////
 function getConn(aa){
     if(aa === 'hr'){
-        return mysql.createConnection({   
+        return mariadb.createConnection({   
             host     : 'freewillmdc.loginto.me', 
             port     : '56861',
             user     : 'fwghr',
@@ -41,7 +41,7 @@ function getConn(aa){
 ///////////////////////////////////////////////////////////////////////
 
 //////////////////////// Save The Earth //////////////////////////////////
-app.get('/api/savetheearth/',(req,res)=> { 
+app.get('/api/receiptUpload/',(req,res)=> { 
     let sql = "SELECT COUNT(employee_id) as totalall FROM save_the_earth WHERE employee_id = "+req.body.employee_id;
     getConn('hr').query(sql,(err,rows,results) => { 
         if(!err){
@@ -57,11 +57,15 @@ app.get('/api/savetheearth/',(req,res)=> {
     })
 })
 
-app.get('/api/savetheearth/ranking',(req,res)=> {
-    let sql = "SELECT * FROM employee INNER JOIN save_the_earth ON save_the_earth.employee_id = employee.employee_id order by COUNT(employee.employee_id) DESC";
+app.get('/api/receiptUpload/ranking/:type',(req,res)=> {
+    var type =  req.params.type;
+    if(type === "2"){
+        var sql = "SELECT employee.sport_team FROM employee INNER JOIN save_the_earth ON save_the_earth.employee_id = employee.employee_id order by COUNT(save_the_earth.employee_id) DESC";
+    }
+    
     getConn('hr').query(sql,(err,rows,results) => { 
         if(!err){
-            res.json({ "HEAD": rows.length , "BODY" : rows, "MESSAGE": "Ranking"})   
+            res.json({ "HEAD": rows.length , "BODY" : rows, "MESSAGE": type})   
         }else{
             res.json(err)
             console.log(err);

@@ -3,7 +3,7 @@ const env = {
     user: 'fwghr',
     password: 'fwg@mdc04111',
     host: 'freewillmdc.loginto.me:56861',
-    dialect: 'mysql',
+    dialect: 'mariadb',
 
   };
   
