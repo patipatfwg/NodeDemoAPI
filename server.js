@@ -62,7 +62,7 @@ app.get('/api/receiptUpload/ranking/:type',(req,res)=> {
     if(type === "2"){
         var sql = "SELECT employee.sport_team FROM employee INNER JOIN save_the_earth ON save_the_earth.employee_id = employee.employee_id order by COUNT(save_the_earth.employee_id) DESC";
     }else if(type === "1"){
-        var sql = "SELECT employee.team  FROM save_the_earth INNER JOIN employee ON save_the_earth.employee_id = employee.employee_id order by  save_the_earth.employee_id DESC";
+        var sql = "SELECT employee.team FROM save_the_earth INNER JOIN employee ON save_the_earth.employee_id = employee.employee_id GROUP BY employee.team order by  save_the_earth.employee_id DESC";
     }
     
     getConn('hr').query(sql,(err,rows,results) => { 
