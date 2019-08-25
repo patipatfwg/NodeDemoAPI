@@ -1,5 +1,9 @@
 const express = require('express') 
-const mysql = require('mysql') 
+const mysql = require('mariadb')
+const Sequelize = require('sequelize');
+const env = require('./env');
+// const sequelize = new Sequelize('mariadb://user:password@example.com:9821/database')
+const sequelize = new Sequelize(env.dialect+'://'+env.user+':'+env.password+'@'+env.host+'/'+env.database)
 const moment = require('moment');
 var momentz = require('moment-timezone');
 const bodyParser = require('body-parser')
@@ -7,7 +11,7 @@ var multer  = require('multer')
 
 var imgurl = 'img/upload/receipt/';
 var upload = multer({ dest: imgurl })
- 
+
 app = express()
 
 // parse application/x-www-form-urlencoded
@@ -38,10 +42,14 @@ function getConn(aa){
 
 //////////////////////// Save The Earth //////////////////////////////////
 app.get('/api/savetheearth/',(req,res)=> { 
-    let sql = "SELECT DATE_FORMAT(receipt_date,'%d %b %Y') as receipt_date,COUNT(receipt_date) as total FROM save_the_earth WHERE employee_id = "+req.body.employee_id+" GROUP BY receipt_date DESC";
+    let sql = "SELECT COUNT(employee_id) as totalall FROM save_the_earth WHERE employee_id = "+req.body.employee_id;
     getConn('hr').query(sql,(err,rows,results) => { 
         if(!err){
-            res.json({ "HEAD": rows.length , "BODY" : rows, "MESSAGE": "Summary"})   
+            var totalall = rows[0].totalall;
+            let sql = "SELECT DATE_FORMAT(receipt_date,'%d %b %Y') as receipt_date,COUNT(receipt_date) as total FROM save_the_earth WHERE employee_id = "+req.body.employee_id+" GROUP BY receipt_date DESC";
+            getConn('hr').query(sql,(err,rows,results) => { 
+                res.json({ "HEAD": totalall , "BODY" : rows, "MESSAGE": "Summary"})                 
+            })
         }else{
             res.json(err)
             console.log(err);
