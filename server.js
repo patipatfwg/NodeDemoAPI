@@ -1,5 +1,7 @@
 const express = require('express');
-const mariadb = require('mariadb');
+// const mariadb = require('mariadb');
+const mysql = require('mysql');
+
 // const Sequelize = require('sequelize');
 // const env = require('./env');
 // const sequelize = new Sequelize('mariadb://user:password@example.com:9821/database')
@@ -32,7 +34,7 @@ app.use(bodyParser.json())
 ////////////////////////// DB Function ////////////////////////////////
 function getConn(aa){
     if(aa === 'hr'){
-        return mariadb.createConnection({   
+        return mysql.createConnection({   
             host     : 'freewillmdc.loginto.me', 
             port     : '56861',
             user     : 'fwghr',
@@ -44,7 +46,7 @@ function getConn(aa){
 ///////////////////////////////////////////////////////////////////////
 
 //////////////////////// Save The Earth //////////////////////////////////
-app.get('/api/receiptUpload/',(req,res)=> { 
+app.get('/api/receiptUpload',(req,res)=> { 
     let sql = "SELECT COUNT(employee_id) as totalall FROM save_the_earth WHERE employee_id = "+req.body.employee_id;
     getConn('hr').query(sql,(err,rows,results) => { 
         if(!err){
