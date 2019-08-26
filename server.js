@@ -11,7 +11,9 @@ const moment = require('moment');
 var momentz = require('moment-timezone');
 
 // const base64ToImage = require('base64-to-image');
-// const multer  = require('multer');
+var base64Img = require('base64-img');
+var multer  = require('multer');
+// var fs = require('fs');
 // const ejs = require('ejs');
 // const path = require('path');
 // var imgurl = 'img/upload/receipt/';
@@ -44,6 +46,18 @@ function getConn(aa){
     }
 }
 ///////////////////////////////////////////////////////////////////////
+///////////////////////// Set ////////////////////////////////////////////
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, 'uploads')
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.fieldname + '-' + Date.now()+'.jpg')
+    }
+  })
+   
+var upload = multer({ storage: storage })
+//////////////////////////////////////////////////////////////////////////
 
 //////////////////////// Save The Earth //////////////////////////////////
 app.get('/api/receiptUpload',(req,res)=> { 
@@ -112,6 +126,20 @@ app.post('/api/receiptUpload',function (req,res){
             res.json(err)
         }       
     });  
+})
+
+app.post('/api/uploadfile', upload.single('myFile'), (req, res, next) => {
+    const file = req.file
+    if (!file) {
+      const error = new Error('Please upload a file')
+      error.httpStatusCode = 400
+      return next(error)
+    }
+    //   res.send(file)
+
+    var based64Img = base64Img.base64Sync(file);
+    console.log(based64Img)
+    
 })
 /////////////////////////////////////////////////////////////////////
 
