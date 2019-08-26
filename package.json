@@ -5,9 +5,10 @@
   "repository": "https://github.com/patipatfwg/fwghrapi.git",
   "author": "Freewill Solution",
   "license": "MIT",
+  "description": "Freewill Human Resource API",
   "scripts": {
-    "dev": "node server.js",
-    "start": "node server.js"
+    "dev": "nodemon --legacy-watch server.js",
+    "start": "nodemon --legacy-watch server.js"
   },
   "engines": {
     "node": "8.11.x"
@@ -19,6 +20,7 @@
     "moment-timezone": "^0.5.26",
     "mqtt": "^3.0.0",
     "multer": "^1.4.2",
+    "nodemon": "^1.18.4",
     "sequelize": "^5.16.0",
     "time-stamp": "^2.2.0"
   },

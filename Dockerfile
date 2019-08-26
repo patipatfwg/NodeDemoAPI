@@ -16,7 +16,9 @@ RUN npm install
 COPY . .
 
 EXPOSE 5000
-CMD [ "node", "server.js" ]
+CMD [ "nodemon", "--legacy-watch", "server.js" ]
 
-# docker build -t patipatfwg/hractivity .
-# docker run --name hractivity-api --restart always -v "$PWD":/usr/src/app -p 56872:5000 -d patipatfwg/hractivity
+
+
+# docker build -t patipatfwg/fwghrapi .
+# docker run --name fwghrapi-api --restart always -v "$PWD":/usr/src/app -p 56872:5000 -d patipatfwg/fwghrapi

@@ -1,18 +1,21 @@
-const express = require('express') 
+const express = require('express');
 const mariadb = require('mariadb/callback');
 // const Sequelize = require('sequelize');
 // const env = require('./env');
 // const sequelize = new Sequelize('mariadb://user:password@example.com:9821/database')
 // const sequelize = new Sequelize(env.dialect+'://'+env.user+':'+env.password+'@'+env.host+'/'+env.database)
+const bodyParser = require('body-parser');
 const moment = require('moment');
 var momentz = require('moment-timezone');
-const bodyParser = require('body-parser')
-var multer  = require('multer')
 
-var imgurl = 'img/upload/receipt/';
-var upload = multer({ dest: imgurl })
+// const base64ToImage = require('base64-to-image');
+// const multer  = require('multer');
+// const ejs = require('ejs');
+// const path = require('path');
+// var imgurl = 'img/upload/receipt/';
+// var upload = multer({ dest: imgurl })
 
-app = express()
+const app = express();
 
 // parse application/x-www-form-urlencoded
 // app.use(bodyParser.urlencoded({ extended: false }))
@@ -77,7 +80,7 @@ app.get('/api/receiptUpload/ranking/:type',(req,res)=> {
     })
 })
 
-app.post('/api/savetheearth/', upload.single('avatar'),function (req,res){  
+app.post('/api/receiptUpload',function (req,res){  
     // const user_id =  req.body.user_id;
     // const section_id =  req.body.section_id;
     // const app_title = req.body.app_title;
@@ -85,23 +88,24 @@ app.post('/api/savetheearth/', upload.single('avatar'),function (req,res){
 
     const receipt_date = req.body.receipt_date;
     const receipt_no = req.body.receipt_no;  
-    const images_url =  imgurl+req.body.user_id+moment().tz('Asia/Bangkok').format("YYYY-MM-DD-HH-mm-ss")+'.jpg';
+    const images =  req.body.images;  
     const employee_id =  req.body.employee_id;
 
-    const sql = "INSERT INTO save_the_earth (receipt_date,receipt_no,images_url,employee_id) VALUES (?,?,?,?)";
-    getConn('hr').query(sql, [receipt_date,receipt_no,images_url,employee_id], function (err, rows, fields) {
+    const sql = "INSERT INTO save_the_earth (receipt_date,receipt_no,images,employee_id) VALUES (?,?,?,?)";
+    getConn('hr').query(sql, [receipt_date,receipt_no,images,employee_id], function (err, rows, fields) {
         if(!err){
 
-            res.json({ "HEAD": fields ,"BODY": rows ,"MESSAGE": "Add Success" })  
+            // res.json({ "HEAD": fields ,"BODY": rows ,"MESSAGE": "Add Success" })  
 
-            // getConn('hr').query('SELECT * FROM save_the_earth',(err,rows,results) => { 
-            //     if(!err){
-            //         res.json({ "HEAD": rows.length ,"BODY": rows ,"MESSAGE": "Add Success" })   
-            //     }else{
-            //         res.json(err)
-            //         console.log(err);
-            //     }   
-            // })
+            getConn('hr').query('SELECT * FROM save_the_earth',(err,rows,results) => { 
+                if(!err){
+                    res.json({ "HEAD": rows.length ,"BODY": rows ,"MESSAGE": "Add Success" })   
+                }else{
+                    res.json(err)
+                    console.log(err);
+                }   
+            })
+
         }else{
             res.json(err)
         }       
