@@ -16,7 +16,9 @@ RUN npm install
 COPY . .
 
 EXPOSE 5000
-CMD [ "nodemon", "--legacy-watch", "server.js" ]
+CMD [ "node", "server.js" ]
+# CMD [ "nodemon", "--legacy-watch", "server.js" ]
+# "start": "nodemon --legacy-watch server.js"
 
 
 

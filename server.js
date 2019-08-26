@@ -1,5 +1,5 @@
 const express = require('express');
-const mariadb = require('mariadb/callback');
+const mariadb = require('mariadb');
 // const Sequelize = require('sequelize');
 // const env = require('./env');
 // const sequelize = new Sequelize('mariadb://user:password@example.com:9821/database')
