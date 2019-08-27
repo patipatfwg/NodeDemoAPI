@@ -5,11 +5,27 @@ const bodyParser = require('body-parser');
 const moment = require('moment');
 var momentz = require('moment-timezone');
 
+const image2base64 = require('image-to-base64');
 var multer  = require('multer');
+// var fs = require('fs');
+// const ejs = require('ejs');
+// const path = require('path');
+// var imgurl = 'img/upload/receipt/';
+// var upload = multer({ dest: imgurl })
 
 const app = express();
 
+// parse application/x-www-form-urlencoded
+// app.use(bodyParser.urlencoded({ extended: false }))
+
+// parse application/json
 app.use(bodyParser.json())
+
+// app.use(function (req, res) {
+//   res.setHeader('Content-Type', 'application/json')
+//   res.write('you posted:\n')
+//   res.end(JSON.stringify(req.body, null, 2))
+// })
 
 ////////////////////////// DB Function ////////////////////////////////
 function getConn(aa){
@@ -77,6 +93,38 @@ app.get('/api/receiptUpload/ranking/:type',(req,res)=> {
     })
 })
 
+// app.post('/api/receiptUpload_',function (req,res){  
+//     // const user_id =  req.body.user_id;
+//     // const section_id =  req.body.section_id;
+//     // const app_title = req.body.app_title;
+//     // const download_at = moment().tz('Asia/Bangkok').format("YYYY-MM-DD HH:mm:ss");
+
+//     const receipt_date = req.body.receipt_date;
+//     const receipt_no = req.body.receipt_no;  
+//     const images =  req.body.images;  
+//     const employee_id =  req.body.employee_id;
+
+//     const sql = "INSERT INTO save_the_earth (receipt_date,receipt_no,images,employee_id) VALUES (?,?,?,?)";
+//     getConn('hr').query(sql, [receipt_date,receipt_no,images,employee_id], function (err, rows, fields) {
+//         if(!err){
+
+//             // res.json({ "HEAD": fields ,"BODY": rows ,"MESSAGE": "Add Success" })  
+
+//             getConn('hr').query('SELECT * FROM save_the_earth',(err,rows,results) => { 
+//                 if(!err){
+//                     res.json({ "HEAD": rows.length ,"BODY": rows ,"MESSAGE": "Add Success" })   
+//                 }else{
+//                     res.json(err)
+//                     console.log(err);
+//                 }   
+//             })
+
+//         }else{
+//             res.json(err)
+//         }       
+//     });  
+// })
+
 app.post('/api/receiptUpload', upload.single('myFile'), (req, res, next) => {
     const file = req.file
     const images = 'uploads/'+fileImg
@@ -128,9 +176,9 @@ app.get('/api/',(req,res)=> {
 /////////////////////////////////////////////////////////////
 
 /////////////////////////// Port Listen /////////////////////
-app.listen('5001',() => {    
-    console.log('start port 5001')  
-    // console.log( moment().tz('Asia/Bangkok').format("YYYY-MM-DD HH:mm:ss") ); 
+app.listen('5000',() => {    
+    console.log('start port 5000')  
+    console.log( moment().tz('Asia/Bangkok').format("YYYY-MM-DD HH:mm:ss") ); // DateNowTimezone
 })
 /////////////////////////////////////////////////////
 

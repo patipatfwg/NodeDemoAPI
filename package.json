@@ -8,7 +8,7 @@
   "description": "Freewill Human Resource API",
   "scripts": {
     "dev": "node server.js",
-    "start": "node  server.js"
+    "start": "node server.js"
   },
   "engines": {
     "node": "8.11.x"

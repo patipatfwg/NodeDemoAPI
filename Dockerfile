@@ -1,4 +1,4 @@
-FROM node
+FROM node:alpine
 
 # Create app directory
 WORKDIR /usr/src/app
@@ -15,7 +15,7 @@ RUN npm install
 # Bundle app source
 COPY . .
 
-EXPOSE 5000
+EXPOSE 5001
 CMD [ "node", "server.js" ]
 # CMD [ "nodemon", "--legacy-watch", "server.js" ]
 # "start": "nodemon --legacy-watch server.js"
