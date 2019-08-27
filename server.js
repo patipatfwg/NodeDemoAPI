@@ -128,8 +128,8 @@ app.get('/api/',(req,res)=> {
 /////////////////////////////////////////////////////////////
 
 /////////////////////////// Port Listen /////////////////////
-app.listen('5001',() => {    
-    console.log('start port 5001')  
+app.listen('5000',() => {    
+    console.log('start port 5000')  
     // console.log( moment().tz('Asia/Bangkok').format("YYYY-MM-DD HH:mm:ss") ); 
 })
 /////////////////////////////////////////////////////

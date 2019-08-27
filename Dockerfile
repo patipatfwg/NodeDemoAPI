@@ -15,7 +15,7 @@ RUN npm install
 # Bundle app source
 COPY . .
 
-EXPOSE 5001
+EXPOSE 5000
 CMD [ "node", "server.js" ]
 # CMD [ "nodemon", "--legacy-watch", "server.js" ]
 # "start": "nodemon --legacy-watch server.js"
