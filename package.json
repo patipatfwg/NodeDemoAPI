@@ -7,8 +7,8 @@
   "license": "MIT",
   "description": "Freewill Human Resource API",
   "scripts": {
-    "dev": "nodemon server.js",
-    "start": "nodemon  server.js"
+    "dev": "node server.js",
+    "start": "node  server.js"
   },
   "engines": {
     "node": "8.11.x"
