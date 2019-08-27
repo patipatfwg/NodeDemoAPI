@@ -1,11 +1,6 @@
 const express = require('express');
-// const mariadb = require('mariadb');
 const mysql = require('mysql');
 
-// const Sequelize = require('sequelize');
-// const env = require('./env');
-// const sequelize = new Sequelize('mariadb://user:password@example.com:9821/database')
-// const sequelize = new Sequelize(env.dialect+'://'+env.user+':'+env.password+'@'+env.host+'/'+env.database)
 const bodyParser = require('body-parser');
 const moment = require('moment');
 var momentz = require('moment-timezone');
