@@ -9,8 +9,17 @@ const time_at = moment().tz('Asia/Bangkok').format("YYYY-MM-DD HH:mm:ss");
 const LoginModel = require('../Model/Employee'); 
 
 var LoginCheck = router.post('',function (req,res){
-    var email = req.body.email;
-    var password = req.body.password;
+    if(req.body){
+        var email = req.body.email;
+        var password = req.body.password;
+    }else{
+        res.json({ "HEAD": {
+                            "code": 400,
+                            "title": "Params What!!"
+                            },
+                    "BODY": rows , 
+        });
+    }
     var msgConsole = time_at+" Login : ";
     var msgRes = 'Send';
     const sql = "SELECT * FROM employee Where email = '"+email+"' AND password = '"+password+"'";
