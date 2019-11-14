@@ -8,6 +8,7 @@ const time_at = moment().tz('Asia/Bangkok').format("YYYY-MM-DD HH:mm:ss");
 
 // const LoginModel = require('../Model/Employee'); 
 const LoginFunc = require('../Function/LoginFunc'); 
+const LoginClass = new LoginFunc();
 
 var LoginCheck = router.post('',function (req,res){
     var data = req.body;
@@ -25,6 +26,7 @@ var LoginCheck = router.post('',function (req,res){
         var empProfile = rows[0];
         var empProfile_status = empProfile['status'];
 
+        //Bulid Function
         if(Object.keys(empProfile).length > 0 ){
             if(empProfile_status ==='none'){
                 var status = 200; 
@@ -44,7 +46,8 @@ var LoginCheck = router.post('',function (req,res){
             var message = 'รหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง'; 
             var messagelog = 'Login Wrong';
         }
-
+        //End Bulid Function
+        
         res.json({ head : {
             status: status,
             message: message
