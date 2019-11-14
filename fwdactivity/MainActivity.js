@@ -11,7 +11,6 @@ const LoginController = require('./Controller/LoginController');
 
 router.use('/login',LoginController);
 
-
 // app.use('/fwdactivity/api', fwdactivity);
 
 module.exports = router;

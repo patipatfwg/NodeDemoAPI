@@ -7,7 +7,7 @@ const conn = require('../../db');
 const time_at = moment().tz('Asia/Bangkok').format("YYYY-MM-DD HH:mm:ss");
 
 const ActivityModel = require('../Model/Activity'); 
-const ActivityFunc = require('../ActivityFunc');
+const ActivityFunc = require('../Function/ActivityFunc');
 
 var get = router.get('',function (req,res){
 
